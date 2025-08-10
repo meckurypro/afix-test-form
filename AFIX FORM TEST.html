@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AFIX Registration</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .form-container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 600;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+        
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+        
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>AFIX REGISTRATION</h1>
+        
+        <form id="afixForm" action="YOUR_MAKE_WEBHOOK_URL_HERE" method="POST">
+            <div class="form-group">
+                <label for="name">Full Name *</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email Address *</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="company">Company/Organization</label>
+                <input type="text" id="company" name="company">
+            </div>
+            
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone">
+            </div>
+            
+            <div class="form-group">
+                <label for="budget">Project Budget *</label>
+                <select id="budget" name="budget" required>
+                    <option value="">Select Budget Range</option>
+                    <option value="<1000">Under $1,000</option>
+                    <option value="1000-5000">$1,000 - $5,000</option>
+                    <option value="5000-10000">$5,000 - $10,000</option>
+                    <option value=">10000">Over $10,000</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="services">Services Needed</label>
+                <select id="services" name="services">
+                    <option value="">Select Service</option>
+                    <option value="automation">Business Automation</option>
+                    <option value="integration">System Integration</option>
+                    <option value="consulting">Automation Consulting</option>
+                    <option value="training">Team Training</option>
+                    <option value="custom">Custom Development</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="timeline">Project Timeline</label>
+                <select id="timeline" name="timeline">
+                    <option value="">Select Timeline</option>
+                    <option value="urgent">ASAP (1-2 weeks)</option>
+                    <option value="soon">Soon (1 month)</option>
+                    <option value="flexible">Flexible (2-3 months)</option>
+                    <option value="planning">Just planning</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="message">Project Description</label>
+                <textarea id="message" name="message" placeholder="Tell us about your automation needs..."></textarea>
+            </div>
+            
+            <button type="submit" class="submit-btn">Register for AFIX Services</button>
+        </form>
+        
+        <div class="success-message" id="successMessage">
+            ✅ Registration submitted successfully! We'll contact you within 24 hours.
+        </div>
+        
+        <div class="error-message" id="errorMessage">
+            ❌ Something went wrong. Please try again or contact us directly.
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('afixForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent default form submission
+            
+            // Collect form data
+            const formData = {
+                name: e.target.name.value,
+                email: e.target.email.value,
+                company: e.target.company.value,
+                phone: e.target.phone.value,
+                budget: e.target.budget.value,
+                services: e.target.services.value,
+                timeline: e.target.timeline.value,
+                message: e.target.message.value,
+                source: 'AFIX Registration Form',
+                timestamp: new Date().toISOString(),
+                ip_info: 'browser_submission'
+            };
+            
+            // Send to webhook
+            fetch('YOUR_MAKE_WEBHOOK_URL_HERE', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById('successMessage').style.display = 'block';
+                    document.getElementById('errorMessage').style.display = 'none';
+                    e.target.reset(); // Clear form
+                } else {
+                    throw new Error('Network response was not ok');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('errorMessage').style.display = 'block';
+                document.getElementById('successMessage').style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html>
